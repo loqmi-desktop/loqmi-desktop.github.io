@@ -1,52 +1,1058 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loqmi | Privacy-First AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>Loqmi — Your AI. Your Machine. Your Privacy.</title>
+
+    <meta name="description" content="Loqmi is a privacy-first desktop AI assistant powered by local LLMs, intelligent routing and Retrieval-Augmented Generation.">
+    <meta name="theme-color" content="#09090b">
+
+    <link rel="icon" href="assets/icons/favicon.png">
+    
+    <style>
+        :root {
+            --bg: #09090b;
+            --surface: #111113;
+            --surface-light: #18181b;
+            --border: rgba(255,255,255,.09);
+            --text: #fafafa;
+            --muted: #a1a1aa;
+            --yellow: #facc15;
+            --yellow-hover: #fde047;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Inter, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1160px;
+            margin: auto;
+            padding: 0 28px;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .gradient-text {
+            background: linear-gradient(110deg, #fff 20%, #facc15 75%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(9,9,11,.82);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -1.3px;
+        }
+
+        .logo span {
+            color: var(--yellow);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 34px;
+            align-items: center;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 13px 22px;
+            border-radius: 10px;
+            font-weight: 650;
+            font-size: 14px;
+            transition: .25s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--yellow);
+            color: #09090b;
+        }
+
+        .btn-primary:hover {
+            background: var(--yellow-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(250,204,21,.15);
+        }
+
+        .btn-secondary {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.035);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,.08);
+        }
+
+        /* HERO */
+
+        .hero {
+            position: relative;
+            padding: 175px 0 105px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 750px;
+            height: 500px;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            background: radial-gradient(
+                ellipse,
+                rgba(234,179,8,.12),
+                transparent 68%
+            );
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .announcement {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.035);
+            border-radius: 50px;
+            color: #d4d4d8;
+            font-size: 12px;
+            letter-spacing: .7px;
+            margin-bottom: 32px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background: #a3e635;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #a3e635;
+        }
+
+        h1 {
+            font-size: clamp(46px, 7vw, 82px);
+            letter-spacing: -4px;
+            line-height: 1.08;
+            font-weight: 800;
+            margin-bottom: 26px;
+        }
+
+        .hero-description {
+            max-width: 680px;
+            margin: auto;
+            color: var(--muted);
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 34px;
+        }
+
+        .requirements {
+            font-size: 12px;
+            color: #71717a;
+            margin-top: 19px;
+        }
+
+        .windows-notice {
+            display: none;
+            max-width: 450px;
+            margin: 35px auto;
+            padding: 25px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            border-radius: 14px;
+        }
+
+        /* SCREENSHOT */
+
+        .hero-preview {
+            margin: 90px auto 0;
+            max-width: 1050px;
+            position: relative;
+        }
+
+        .screenshot-frame {
+            background: #171719;
+            padding: 8px;
+            border: 1px solid rgba(255,255,255,.13);
+            border-radius: 17px;
+            box-shadow: 0 35px 100px rgba(0,0,0,.55);
+        }
+
+        .screenshot-frame img {
+            display: block;
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .preview-caption {
+            color: #71717a;
+            font-size: 12px;
+            margin-top: 18px;
+        }
+
+        /* TRUST STRIP */
+
+        .trust-strip {
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 28px 0;
+        }
+
+        .trust-items {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 35px;
+            color: #a1a1aa;
+            font-size: 13px;
+        }
+
+        /* SECTION COMMON */
+
+        section.content-section {
+            padding: 115px 0;
+        }
+
+        .section-label {
+            color: var(--yellow);
+            font-size: 11px;
+            font-weight: 750;
+            letter-spacing: 2px;
+            margin-bottom: 17px;
+        }
+
+        .section-heading {
+            font-size: clamp(34px, 5vw, 49px);
+            line-height: 1.18;
+            letter-spacing: -1.8px;
+            margin-bottom: 20px;
+        }
+
+        .section-description {
+            max-width: 620px;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        /* FEATURES */
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 17px;
+            margin-top: 55px;
+        }
+
+        .feature-card {
+            padding: 28px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            background: var(--surface);
+            transition: .3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(250,204,21,.4);
+            background: #151518;
+        }
+
+        .feature-icon {
+            font-size: 27px;
+            margin-bottom: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--muted);
+        }
+
+        /* PRODUCT SHOWCASE */
+
+        .showcase {
+            display: grid;
+            grid-template-columns: .8fr 1.2fr;
+            align-items: center;
+            gap: 65px;
+            margin-top: 95px;
+        }
+
+        .showcase.reverse {
+            grid-template-columns: 1.2fr .8fr;
+        }
+
+        .showcase-image {
+            padding: 7px;
+            background: #18181b;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            overflow: hidden;
+        }
+
+        .showcase-image img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 7px;
+        }
+
+        .showcase h3 {
+            font-size: 30px;
+            line-height: 1.3;
+            letter-spacing: -1px;
+            margin-bottom: 17px;
+        }
+
+        .showcase p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        .showcase-tag {
+            display: inline-block;
+            color: var(--yellow);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 17px;
+        }
+
+        .showcase-link {
+            display: inline-block;
+            color: var(--yellow);
+            font-size: 13px;
+            margin-top: 22px;
+        }
+
+        .showcase-link:hover {
+            text-decoration: underline;
+        }
+
+        /* PRIVACY */
+
+        .privacy-box {
+            text-align: center;
+            padding: 75px 30px;
+            border: 1px solid rgba(250,204,21,.18);
+            border-radius: 22px;
+            background:
+                radial-gradient(
+                    ellipse at 50% 0%,
+                    rgba(250,204,21,.09),
+                    transparent 65%
+                ),
+                #111113;
+        }
+
+        .privacy-icon {
+            font-size: 43px;
+            margin-bottom: 22px;
+        }
+
+        .privacy-box p {
+            color: var(--muted);
+            max-width: 650px;
+            margin: 22px auto 0;
+            line-height: 1.9;
+        }
+
+        /* DOWNLOAD */
+
+        .download-section {
+            text-align: center;
+            padding: 100px 0 120px;
+        }
+
+        .download-section h2 {
+            font-size: clamp(42px, 6vw, 65px);
+            letter-spacing: -2.5px;
+            line-height: 1.15;
+            margin-bottom: 23px;
+        }
+
+        .download-section p {
+            color: var(--muted);
+            margin-bottom: 33px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 38px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: #71717a;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .showcase,
+            .showcase.reverse {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                margin-top: 70px;
+            }
+
+            .showcase.reverse .showcase-image {
+                order: 2;
+            }
+
+            .showcase.reverse .showcase-content {
+                order: 1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 0 19px;
+            }
+
+            .nav-inner {
+                height: 68px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 140px;
+            }
+
+            h1 {
+                letter-spacing: -2px;
+            }
+
+            .hero-description {
+                font-size: 15px;
+            }
+
+            .hero-preview {
+                margin-top: 55px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section.content-section {
+                padding: 80px 0;
+            }
+
+            .trust-items {
+                gap: 18px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+            }
+
+            .privacy-box {
+                padding: 55px 23px;
+            }
+        }
+    </style>
 </head>
-<body class="bg-zinc-950 text-white font-sans antialiased flex flex-col items-center justify-center min-h-screen">
-    <div class="text-center px-4">
-        <h1 class="text-5xl font-bold mb-4 tracking-tight">Loqmi <span class="text-yellow-400">🧠</span></h1>
-        <p class="text-xl text-zinc-400 mb-8 max-w-xl mx-auto">
-            A privacy-first desktop AI assistant using local GGUF models and RAG. Nothing leaves your machine.
-        </p>
 
-        <!-- Default Mac UI -->
-        <div id="mac-ui" class="flex flex-col items-center">
-            <a href="https://github.com/loqmi-desktop/loqmi/releases/download/v0.1.0-alpha/loqmi_0.1.0_aarch64.dmg" 
-               class="inline-block bg-yellow-400 text-zinc-950 font-semibold px-8 py-3 rounded-lg hover:bg-yellow-300 transition-colors">
-                Download for macOS (Apple Silicon)
+<body>
+
+    <!-- NAVIGATION -->
+
+    <nav>
+        <div class="container nav-inner">
+
+            <a href="#" class="logo">
+                loqmi<span> ✳</span>
             </a>
-            <p class="mt-4 text-sm text-zinc-500">Requires macOS 12.0+ • Version 0.1.0-alpha</p>
-        </div>
 
-        <!-- Windows UI (Hidden by default) -->
-        <div id="windows-ui" class="hidden flex-col items-center">
-            <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-xl inline-block shadow-lg">
-                <p class="text-xl text-white font-semibold mb-2">Windows version coming soon! 🚀</p>
-                <p class="text-zinc-400 text-sm mb-4">We are currently optimizing Loqmi for Windows machines.</p>
-                <a href="https://github.com/loqmi-desktop/loqmi/releases/download/v0.1.0-alpha/loqmi_0.1.0_aarch64.dmg" 
-                   class="text-yellow-400 text-sm hover:text-yellow-300 hover:underline transition-colors">
-                   I have a Mac too. Download the .dmg anyway.
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#showcase">Product</a>
+                <a href="#privacy">Privacy</a>
+                <a href="YOUR_MAIN_GITHUB_REPOSITORY" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+            </div>
+
+            <a href="#download" class="btn btn-primary">
+                Get Loqmi →
+            </a>
+
+        </div>
+    </nav>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+        <div class="container hero-content">
+
+            <div class="announcement">
+                <span class="status-dot"></span>
+                LOCAL AI. YOUR RULES.
+            </div>
+
+            <h1>
+                Your AI.<br>
+                <span class="gradient-text">Your Machine.</span>
+            </h1>
+
+            <p class="hero-description">
+                Meet Loqmi, your privacy-first desktop AI assistant.
+                Run powerful local language models, chat with your
+                documents, and take control of your intelligence.
+            </p>
+
+            <!-- MAC DOWNLOAD -->
+
+            <div id="mac-ui" class="hero-buttons">
+
+                <a href="YOUR_MAC_DOWNLOAD_LINK" class="btn btn-primary">
+                    ↓ &nbsp; Download for macOS
+                </a>
+
+                <a href="YOUR_MAIN_GITHUB_REPOSITORY"
+                   target="_blank" rel="noopener noreferrer"
+                   class="btn btn-secondary">
+                    Explore GitHub ↗
+                </a>
+
+            </div>
+
+            <!-- WINDOWS NOTICE -->
+
+            <div id="windows-ui" class="windows-notice">
+                <h3>Windows support is coming soon.</h3>
+                <p class="muted" style="margin-top:8px;font-size:14px">
+                    We're working on bringing Loqmi to Windows.
+                </p>
+                <a href="YOUR_MAIN_GITHUB_REPOSITORY"
+                   class="showcase-link">
+                    Follow development on GitHub →
                 </a>
             </div>
+
+            <p class="requirements">
+                Apple Silicon &nbsp;·&nbsp; macOS 12.0+ &nbsp;·&nbsp; Version 0.1.0-alpha
+            </p>
+
+
+            <!-- MAIN PRODUCT SCREENSHOT -->
+
+            <div class="hero-preview">
+                <div class="screenshot-frame">
+                    <img
+                        src="assets/images/loqmi-hero.png"
+                        alt="Loqmi desktop AI chat interface"
+                        fetchpriority="high">
+                </div>
+
+                <p class="preview-caption">
+                    Meet your new local AI workspace.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- TECHNOLOGY STRIP -->
+
+    <div class="trust-strip">
+        <div class="container trust-items">
+            <span>⚡ Local LLM Inference</span>
+            <span>🧠 Intelligent Routing</span>
+            <span>📚 Local RAG</span>
+            <span>🔒 Privacy First</span>
+            <span>🌐 Optional Web Search</span>
         </div>
     </div>
 
-    <!-- OS Detection Script -->
+
+    <!-- FEATURES -->
+
+    <section id="features" class="content-section">
+        <div class="container">
+
+            <div class="section-label">BUILT FOR LOCAL INTELLIGENCE</div>
+
+            <h2 class="section-heading">
+                More than a chatbot.<br>
+                <span class="muted">A complete AI workspace.</span>
+            </h2>
+
+            <p class="section-description">
+                Everything you need to work with AI, without
+                handing over control of your data.
+            </p>
+
+
+            <div class="features-grid">
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacy by Design</h3>
+                    <p>
+                        Run language models locally and keep your
+                        conversations and documents on your machine.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Smart Intent Routing</h3>
+                    <p>
+                        Automatically classify prompts and route tasks
+                        to specialized models for different workloads.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Local RAG</h3>
+                    <p>
+                        Build your own knowledge base and retrieve
+                        relevant context from your personal documents.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Efficient Inference</h3>
+                    <p>
+                        Powered by llama.cpp and quantized GGUF models
+                        for efficient local inference.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Optional Web Search</h3>
+                    <p>
+                        Bring external information into your workflow
+                        whenever you need additional context.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💻</div>
+                    <h3>Model Management</h3>
+                    <p>
+                        Discover, download and manage your local models
+                        from one unified desktop interface.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- PRODUCT SHOWCASE -->
+
+    <section id="showcase" class="content-section">
+        <div class="container">
+
+            <div class="section-label">EXPLORE LOQMI</div>
+
+            <h2 class="section-heading">
+                Powerful capabilities.<br>
+                <span class="muted">One local workspace.</span>
+            </h2>
+
+
+            <!-- KNOWLEDGE BASE -->
+
+            <div class="showcase">
+
+                <div class="showcase-content">
+
+                    <span class="showcase-tag">01 / KNOWLEDGE BASE</span>
+
+                    <h3>
+                        Your documents.<br>
+                        Your knowledge.
+                    </h3>
+
+                    <p>
+                        Import PDFs, text files and images into your
+                        local knowledge base. Loqmi processes and
+                        embeds your documents to power Retrieval-Augmented
+                        Generation.
+                    </p>
+
+                    <a href="YOUR_MAIN_GITHUB_REPOSITORY"
+                       class="showcase-link">
+                        Explore the project →
+                    </a>
+
+                </div>
+
+                <div class="showcase-image">
+                    <img
+                        src="assets/images/loqmi-knowledge-base.png"
+                        alt="Loqmi Knowledge Base with uploaded documents"
+                        loading="lazy">
+                </div>
+
+            </div>
+
+
+            <!-- MODEL CATALOG -->
+
+            <div class="showcase reverse">
+
+                <div class="showcase-image">
+                    <img
+                        src="assets/images/loqmi-model-catalog.png"
+                        alt="Loqmi local model catalog"
+                        loading="lazy">
+                </div>
+
+                <div class="showcase-content">
+
+                    <span class="showcase-tag">02 / MODEL MANAGEMENT</span>
+
+                    <h3>
+                        Choose your models.<br>
+                        Own your intelligence.
+                    </h3>
+
+                    <p>
+                        Explore a curated catalog of open-source
+                        language models. Review model sizes, memory
+                        requirements and context windows before
+                        downloading models directly to your machine.
+                    </p>
+
+                    <a href="YOUR_MAIN_GITHUB_REPOSITORY"
+                       class="showcase-link">
+                        Explore the project →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- DOCUMENT CHAT -->
+
+            <div class="showcase">
+
+                <div class="showcase-content">
+
+                    <span class="showcase-tag">03 / DOCUMENT INTELLIGENCE</span>
+
+                    <h3>
+                        Research smarter.<br>
+                        Understand more.
+                    </h3>
+
+                    <p>
+                        Upload a document and interact with its contents
+                        using your local AI models. Summarize research
+                        papers, extract insights and explore complex
+                        information without relying on cloud AI.
+                    </p>
+
+                    <a href="YOUR_MAIN_GITHUB_REPOSITORY"
+                       class="showcase-link">
+                        Explore the project →
+                    </a>
+
+                </div>
+
+                <div class="showcase-image">
+                    <img
+                        src="assets/images/loqmi-document-chat.png"
+                        alt="Loqmi interacting with an uploaded research paper"
+                        loading="lazy">
+                </div>
+
+            </div>
+
+
+            <!-- HUGGING FACE SEARCH -->
+
+            <div class="showcase reverse">
+
+                <div class="showcase-image">
+                    <img
+                        src="assets/images/loqmi-huggingface-search.png"
+                        alt="Loqmi Hugging Face model search"
+                        loading="lazy">
+                </div>
+
+                <div class="showcase-content">
+
+                    <span class="showcase-tag">04 / MODEL DISCOVERY</span>
+
+                    <h3>
+                        Go beyond the catalog.
+                    </h3>
+
+                    <p>
+                        Search Hugging Face for GGUF-compatible models
+                        and discover additional open-source models
+                        to expand your local AI workspace.
+                    </p>
+
+                    <a href="YOUR_MAIN_GITHUB_REPOSITORY"
+                       class="showcase-link">
+                        Explore the project →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- PRIVACY -->
+
+    <section id="privacy" class="content-section">
+        <div class="container">
+
+            <div class="privacy-box">
+
+                <div class="privacy-icon">🛡️</div>
+
+                <div class="section-label">YOUR DATA. YOUR CONTROL.</div>
+
+                <h2 class="section-heading">
+                    AI should work for you.<br>
+                    <span class="gradient-text">
+                        Not the other way around.
+                    </span>
+                </h2>
+
+                <p>
+                    Loqmi puts privacy at the center of the AI experience.
+                    Run local models, interact with your documents,
+                    and keep control of your information.
+                </p>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- DOWNLOAD -->
+
+    <section id="download" class="download-section">
+        <div class="container">
+
+            <div class="section-label">GET STARTED WITH LOQMI</div>
+
+            <h2>
+                Intelligence belongs<br>
+                <span class="gradient-text">on your machine.</span>
+            </h2>
+
+            <p>
+                Experience a different kind of AI assistant.
+            </p>
+
+            <div id="download-mac">
+
+                <a href="YOUR_MAC_DOWNLOAD_LINK"
+                   class="btn btn-primary">
+                    ↓ &nbsp; Download Loqmi for macOS
+                </a>
+
+                <p class="requirements">
+                    Apple Silicon · macOS 12.0+ · Version 0.1.0-alpha
+                </p>
+
+            </div>
+
+            <div id="download-windows" style="display:none">
+                <p>Windows support is coming soon.</p>
+                <a href="YOUR_MAIN_GITHUB_REPOSITORY"
+                   class="showcase-link">
+                    Follow development on GitHub →
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+        <div class="container footer-inner">
+
+            <div>
+                <a href="#" class="logo">
+                    loqmi<span> ✳</span>
+                </a>
+
+                <p class="muted" style="font-size:12px;margin-top:7px">
+                    Your AI. Your Machine. Your Privacy.
+                </p>
+            </div>
+
+            <div class="footer-links">
+
+                <a href="#features">Features</a>
+
+                <a href="YOUR_MAIN_GITHUB_REPOSITORY">
+                    GitHub
+                </a>
+
+                <a href="YOUR_RELEASES_LINK">
+                    Releases
+                </a>
+
+                <a href="YOUR_ISSUES_LINK">
+                    Issues
+                </a>
+
+            </div>
+
+            <div class="copyright">
+                © <span id="year"></span> Loqmi.
+                Built for a more private AI future.
+            </div>
+
+        </div>
+    </footer>
+
+
+    <!-- SCRIPTS -->
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Check if the user agent contains Windows
-            const isWindows = navigator.userAgent.toLowerCase().includes("windows");
-            
+
+            const isWindows = /windows/i.test(navigator.userAgent);
+
             if (isWindows) {
-                document.getElementById("mac-ui").classList.add("hidden");
-                document.getElementById("windows-ui").classList.remove("hidden");
-                document.getElementById("windows-ui").classList.add("flex");
+
+                document.getElementById("mac-ui").style.display = "none";
+                document.getElementById("windows-ui").style.display = "block";
+
+                document.getElementById("download-mac").style.display = "none";
+                document.getElementById("download-windows").style.display = "block";
+
             }
+
+            document.getElementById("year").textContent =
+                new Date().getFullYear();
+
         });
     </script>
+
 </body>
 </html>

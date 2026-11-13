@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loqmi | Privacy-First AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-950 text-white font-sans antialiased flex flex-col items-center justify-center min-h-screen">
+    <div class="text-center px-4">
+        <h1 class="text-5xl font-bold mb-4 tracking-tight">Loqmi <span class="text-yellow-400">🧠</span></h1>
+        <p class="text-xl text-zinc-400 mb-8 max-w-xl mx-auto">
+            A privacy-first desktop AI assistant using local GGUF models and RAG. Nothing leaves your machine.
+        </p>
+
+        <!-- Default Mac UI -->
+        <div id="mac-ui" class="flex flex-col items-center">
+            <a href="https://github.com/loqmi-desktop/loqmi/releases/download/v0.1.0-alpha/loqmi_0.1.0_aarch64.dmg" 
+               class="inline-block bg-yellow-400 text-zinc-950 font-semibold px-8 py-3 rounded-lg hover:bg-yellow-300 transition-colors">
+                Download for macOS (Apple Silicon)
+            </a>
+            <p class="mt-4 text-sm text-zinc-500">Requires macOS 12.0+ • Version 0.1.0-alpha</p>
+        </div>
+
+        <!-- Windows UI (Hidden by default) -->
+        <div id="windows-ui" class="hidden flex-col items-center">
+            <div class="bg-zinc-900 border border-zinc-800 p-6 rounded-xl inline-block shadow-lg">
+                <p class="text-xl text-white font-semibold mb-2">Windows version coming soon! 🚀</p>
+                <p class="text-zinc-400 text-sm mb-4">We are currently optimizing Loqmi for Windows machines.</p>
+                <a href="https://github.com/loqmi-desktop/loqmi/releases/download/v0.1.0-alpha/loqmi_0.1.0_aarch64.dmg" 
+                   class="text-yellow-400 text-sm hover:text-yellow-300 hover:underline transition-colors">
+                   I have a Mac too. Download the .dmg anyway.
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- OS Detection Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Check if the user agent contains Windows
+            const isWindows = navigator.userAgent.toLowerCase().includes("windows");
+            
+            if (isWindows) {
+                document.getElementById("mac-ui").classList.add("hidden");
+                document.getElementById("windows-ui").classList.remove("hidden");
+                document.getElementById("windows-ui").classList.add("flex");
+            }
+        });
+    </script>
+</body>
+</html>
